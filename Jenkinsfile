@@ -1,7 +1,7 @@
 // Declarative pipeline: build the Homies solution and run all tests
 // when changes are pushed to the main branch.
 
-def run(String cmd) {
+def runCmd(String cmd) {
     if (isUnix()) {
         sh cmd
     } else {
@@ -36,19 +36,19 @@ pipeline {
 
         stage('Restore') {
             steps {
-                run 'dotnet restore Homies.sln'
+                runCmd('dotnet restore Homies.sln')
             }
         }
 
         stage('Build') {
             steps {
-                run 'dotnet build Homies.sln --no-restore --configuration Release'
+                runCmd('dotnet build Homies.sln --no-restore --configuration Release')
             }
         }
 
         stage('Test') {
             steps {
-                run 'dotnet test Homies.sln --no-build --configuration Release --verbosity normal'
+                runCmd('dotnet test Homies.sln --no-build --configuration Release --verbosity normal')
             }
         }
     }
